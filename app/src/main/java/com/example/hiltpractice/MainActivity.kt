@@ -1,6 +1,7 @@
 package com.example.hiltpractice
 
 import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
@@ -28,6 +29,7 @@ import androidx.compose.ui.unit.sp
 import com.example.hiltpractice.ui.theme.HiltPracticeTheme
 import dagger.hilt.android.AndroidEntryPoint
 import jakarta.inject.Inject
+import androidx.core.net.toUri
 
 class MainActivity : ComponentActivity() {
 
@@ -51,8 +53,13 @@ class MainActivity : ComponentActivity() {
 
                             Button(
                                 onClick = {
-                                    val intent = Intent(context, SecondActivity::class.java)
-                                    intent.putExtra("AcDc", "Highway to hell")
+
+//                                    val intent = Intent(Intent.ACTION_VIEW)
+//                                    intent.putExtra("AcDc", "Highway to hell")
+//                                    context.startActivity(intent)
+
+                                    val intent = Intent(Intent.ACTION_VIEW)
+                                    intent.data = "https://github.com/Prashant-Sgh".toUri()
                                     context.startActivity(intent)
                                 }
                             ) {

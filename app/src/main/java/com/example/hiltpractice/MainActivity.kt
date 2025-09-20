@@ -14,6 +14,8 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
+import com.example.hiltpractice.models.JokeItem
+import com.example.hiltpractice.ui.composables.UserContent
 import com.example.hiltpractice.ui.theme.HiltPracticeTheme
 import dagger.hilt.android.AndroidEntryPoint
 import jakarta.inject.Inject
@@ -47,11 +49,17 @@ fun Greeting(name: String, modifier: Modifier = Modifier) {
         )
     }
 }
-
 @Preview(showBackground = true, showSystemUi = true)
 @Composable
-fun GreetingPreview() {
+fun UserContentComposable() {
+
+    val jokeItem = JokeItem(
+        punchline = "Some random joke will come here.",
+        setup = "And the setup for this joke will be visible here."
+    )
+
+    val doShow: Boolean = true
     HiltPracticeTheme {
-        Greeting("Android")
+        UserContent(jokeItem, doShow)
     }
 }

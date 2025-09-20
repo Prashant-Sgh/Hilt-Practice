@@ -21,9 +21,6 @@ import jakarta.inject.Inject
 @AndroidEntryPoint
 class MainActivity : ComponentActivity() {
 
-    @Inject
-    lateinit var someClass: SomeClass
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
@@ -31,33 +28,13 @@ class MainActivity : ComponentActivity() {
             HiltPracticeTheme {
                 Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
                     Greeting(
-                        name = someClass.getString(),
+                        name = "Android",
                         modifier = Modifier.padding(innerPadding)
                     )
                 }
             }
         }
     }
-}
-
-
-class SomeClass @Inject constructor(
-    private val someInterfaceImp: SomeInterfaceImp
-)
-{
-    fun getString(): String {
-        return someInterfaceImp.hiltGreeting()
-    }
-}
-
-class SomeInterfaceImp @Inject constructor(): SomeInterface {
-    override fun hiltGreeting(): String {
-        return "Hey Hilt, returned this string.."
-    }
-}
-
-interface SomeInterface {
-    fun hiltGreeting() : String
 }
 
 @Composable

@@ -1,4 +1,4 @@
-package com.example.hiltpractice.models
+package com.example.hiltpractice.data.models
 
 import javax.inject.Inject
 

@@ -12,6 +12,9 @@ composeBom = "2024.09.00"
 hilt = "2.56.2"
 #ksp
 ksp = "2.0.21-1.0.28"
+#retrofit
+retrofit = "3.0.0"
+okhttp = "5.1.0"
 [libraries]
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
 junit = { group = "junit", name = "junit", version.ref = "junit" }
@@ -30,6 +33,11 @@ androidx-compose-material3 = { group = "androidx.compose.material3", name = "mat
 #Hilt
 hilt-android = {module = "com.google.dagger:hilt-android", version.ref = "hilt"}
 hilt-compiler = {module = "com.google.dagger:hilt-android-compiler", version.ref  = "hilt"}
+
+#Retrofit
+retrofit = {module = "com.squareup.retrofit2:retrofit", version.ref = "retrofit"}
+converter-gson = {module = "com.squareup.retrofit2:converter-gson", version.ref = "retrofit"}
+logging-interceptor = { group = "com.squareup.okhttp3", name = "logging-interceptor", version.ref = "okhttp" }
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }

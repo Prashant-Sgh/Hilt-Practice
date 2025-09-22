@@ -1,4 +1,4 @@
-package com.example.hiltpractice.data.models
+package com.example.hiltpractice.data.model
 
 data class JokeItem(
     val id: Int = 0,

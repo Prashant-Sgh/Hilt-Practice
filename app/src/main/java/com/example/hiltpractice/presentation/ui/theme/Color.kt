@@ -1,4 +1,4 @@
-package com.example.hiltpractice.ui.theme
+package com.example.hiltpractice.presentation.ui.theme
 
 import androidx.compose.ui.graphics.Color
 

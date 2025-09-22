@@ -1,4 +1,4 @@
-package com.example.hiltpractice.di
+package com.example.hiltpractice.data.di
 
 import com.example.hiltpractice.data.network.JokeApiService
 import dagger.Module

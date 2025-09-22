@@ -14,7 +14,7 @@ object NetworkModule {
 
     @Provides
     fun provideRetrofit(): Retrofit = Retrofit.Builder()
-        .baseUrl("baseURL")
+        .baseUrl("https://official-joke-api.appspot.com/")
         .addConverterFactory(GsonConverterFactory.create())
         .build()
 

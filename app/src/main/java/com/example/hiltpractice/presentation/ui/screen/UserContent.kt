@@ -1,6 +1,5 @@
 package com.example.hiltpractice.presentation.ui.screen
 
-import android.util.Log
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
@@ -14,6 +13,7 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -21,23 +21,38 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.example.hiltpractice.data.model.JokeItem
+import com.example.hiltpractice.domain.repository.JokeRepository
 
 @OptIn(ExperimentalMaterial3Api::class)
-@Preview(showBackground = true, showSystemUi = true)
+//@Preview(showBackground = true, showSystemUi = true)
 @Composable
 fun UserContent(
+    jokeRepository: JokeRepository
 ) {
-        val jokeItem = JokeItem(
-        punchline = "Some random joke will come here.",
-        setup = "And the setup for this joke will be visible here."
-       )
+//        val jokeItem by remember { mutableStateOf( JokeItem(
+//        punchline = "Loading.......",
+//        setup = "Loading........"
+//       ))}
 
-    var doShow by remember { mutableStateOf(false) }
-    var count by remember {mutableStateOf(0)}
+    var punchline by remember { mutableStateOf("Loading.......") }
+    var setup by remember { mutableStateOf("loading.......") }
+
+    LaunchedEffect(Unit) {
+        val result  = jokeRepository.getJoke()
+        result.onSuccess { body ->
+            punchline = body.punchline
+            setup = body.setup
+//            jokeItem.setup = body.setup
+        }.onFailure { exception ->
+            punchline = exception.message?: "Oops! something went really wrong"
+            setup = exception.message?: "XXXXXXXXXXXXXXXXX"
+//            jokeItem.setup = exception.message?: "XXXXXXXXXXXXXX"
+        }
+    }
+
+
 
     Scaffold (
         topBar = {
@@ -62,33 +77,17 @@ fun UserContent(
         ) {
             Column(horizontalAlignment = Alignment.CenterHorizontally) {
                 Spacer(Modifier.height(100.dp))
-                Text("$count", fontSize = 20.sp)
+                Text(punchline, fontSize = 20.sp)
 
-                Text(jokeItem.punchline, fontSize = 20.sp)
-
-                if (doShow) {
                     Spacer(Modifier.height(50.dp))
-                    Text(jokeItem.setup, fontSize = 18.sp, color = Color.DarkGray)
-                } else {
+                    Text(setup, fontSize = 18.sp, color = Color.DarkGray)
                     Spacer(Modifier.height(50.dp))
 
                     Button(onClick = {}) {
                         Text("Tell")
                     }
-                }
 
                 Spacer(Modifier.height(200.dp))
-
-                Button(
-                    onClick = {
-                        doShow = !doShow
-                        count++
-                        Log.d("PrintX", "Button Pressed - $count, AND doSHow - $doShow")
-                    }
-                ) {
-                    Text("Toggle show")
-                }
-
 
             }
         }

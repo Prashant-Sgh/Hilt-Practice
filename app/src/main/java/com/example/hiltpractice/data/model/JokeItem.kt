@@ -1,8 +1,8 @@
 package com.example.hiltpractice.data.model
 
 data class JokeItem(
-    val id: Int = 0,
-    val punchline: String = "Punch line",
-    val setup: String = "setup",
-    val type: String = "type"
+    var id: Int = 0,
+    var punchline: String = "Punch line",
+    var setup: String = "setup",
+    var type: String = "type"
 )

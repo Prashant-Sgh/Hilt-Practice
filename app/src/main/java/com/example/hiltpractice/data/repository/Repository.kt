@@ -13,7 +13,7 @@ class Repository @Inject constructor(
             val response = apiService.fetchJoke()
             val body = response.body()
             if (response.isSuccessful && body != null) {
-                body
+                body.first()
             } else {
                 throw Exception("Something went wrong")
             }

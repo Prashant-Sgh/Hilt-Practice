@@ -10,19 +10,25 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import com.example.hiltpractice.data.repository.JokeRepositoryImpl
+import com.example.hiltpractice.domain.repository.JokeRepository
 import com.example.hiltpractice.presentation.ui.screen.UserContent
 import com.example.hiltpractice.presentation.ui.theme.HiltPracticeTheme
 import dagger.hilt.android.AndroidEntryPoint
+import javax.inject.Inject
 
 @AndroidEntryPoint
 class MainActivity : ComponentActivity() {
+
+    @Inject
+    lateinit var jokeRepository: JokeRepository
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         setContent {
             HiltPracticeTheme {
-                UserContent()
+                UserContent(jokeRepository)
             }
         }
     }

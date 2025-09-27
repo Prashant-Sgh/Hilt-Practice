@@ -46,13 +46,13 @@ class MainActivity : ComponentActivity() {
                             Button(
                                 onClick = {
 
-//                                    val intent = Intent(Intent.ACTION_VIEW)
-//                                    intent.putExtra("AcDc", "Highway to hell")
-//                                    context.startActivity(intent)
-
-                                    val intent = Intent(Intent.ACTION_VIEW)
-                                    intent.data = "https://github.com/Prashant-Sgh".toUri()
+                                    val intent = Intent(context, SecondActivity::class.java)
+                                    intent.putExtra("AcDc", "Highway to hell")
                                     context.startActivity(intent)
+
+//                                    val intent = Intent(Intent.ACTION_VIEW)
+//                                    intent.data = "https://github.com/Prashant-Sgh".toUri()
+//                                    context.startActivity(intent)
                                 }
                             ) {
                                 Text("Click me")

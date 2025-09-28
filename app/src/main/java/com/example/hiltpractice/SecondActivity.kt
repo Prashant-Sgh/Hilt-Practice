@@ -22,8 +22,17 @@ import androidx.compose.ui.unit.sp
 import com.example.hiltpractice.ui.theme.HiltPracticeTheme
 import android.media.AudioManager
 import android.media.ToneGenerator
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.runtime.setValue
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Job
+import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
+import kotlin.collections.mutableMapOf
 
 class SecondActivity: ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -38,45 +47,46 @@ class SecondActivity: ComponentActivity() {
 }
 
 suspend fun transitMoors(toneGen: ToneGenerator) {
-    toneGen.startTone(ToneGenerator.TONE_DTMF_0, 800)
-    delay(200)
-    toneGen.startTone(ToneGenerator.TONE_DTMF_0, 400)
-    delay(200)
-    toneGen.startTone(ToneGenerator.TONE_DTMF_0, 400)
-    delay(200)
-    toneGen.startTone(ToneGenerator.TONE_DTMF_0, 200)
-    delay(200)
-    toneGen.startTone(ToneGenerator.TONE_DTMF_0, 200)
-    delay(200)
-    toneGen.startTone(ToneGenerator.TONE_DTMF_0,100)
+    toneGen.startTone(ToneGenerator.TONE_DTMF_1, 800)
+    delay(700)
+    toneGen.startTone(ToneGenerator.TONE_DTMF_1, 400)
+    delay(800)
+    toneGen.startTone(ToneGenerator.TONE_DTMF_1, 400)
+    delay(800)
+    toneGen.startTone(ToneGenerator.TONE_DTMF_1, 200)
+    delay(800)
+    toneGen.startTone(ToneGenerator.TONE_DTMF_1, 200)
+    delay(800)
+    toneGen.startTone(ToneGenerator.TONE_DTMF_1,100)
 }
 
 @Composable
 fun SecondScreen(text: String) {
 
-    var toneGen = ToneGenerator(AudioManager.STREAM_MUSIC, 100)
+    var toneGen = remember { ToneGenerator(AudioManager.STREAM_MUSIC, 100) }
+    val coroutineScope = rememberCoroutineScope()
+    var job by  remember { mutableStateOf<Job?>(null) }
 
     Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center
     ) {
         Column(
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
-            Text("Second Activity", fontSize = 20.sp)
-
-            Spacer(modifier = Modifier.height(10.dp))
-
-            Text("\"$text\"", fontSize = 18.sp, color = Color.DarkGray)
-
-            Spacer(Modifier.height(40.dp))
+//            Text("Second Activity", fontSize = 20.sp)
+//
+//            Spacer(modifier = Modifier.height(10.dp))
+//
+//            Text("\"$text\"", fontSize = 18.sp, color = Color.DarkGray)
+//
+//            Spacer(Modifier.height(40.dp))
 
             Button(
                 onClick = {
-
-                    //TODO call a suspend function for tones when button clicked.
-//                    toneGen.startTone(ToneGenerator.TONE_DTMF_0, 3000)
-//                    rememberCoroutineScope {
-//                        transitMoors(toneGen)
-//                    }
+                    if (job?.isActive != true) {
+                        job = coroutineScope.launch {
+                            transitMoors(toneGen)
+                        }
+                    }
                 },
                 colors = ButtonDefaults.buttonColors(Color.Green),
                 elevation = ButtonDefaults.buttonElevation(defaultElevation = 5.dp)
@@ -88,6 +98,7 @@ fun SecondScreen(text: String) {
 
             Button(
                 onClick = {
+                    job?.cancel()
                     toneGen.stopTone()
                 },
                 colors = ButtonDefaults.buttonColors(Color.Yellow),
@@ -100,10 +111,10 @@ fun SecondScreen(text: String) {
 
             ElevatedButton(
                 onClick = {
+                    job?.cancel()
                     toneGen.release()
                           },
                 colors = ButtonDefaults.buttonColors(Color.Red),
-//                elevation = ButtonDefaults.buttonElevation(defaultElevation = 7.dp)
             ) {
                 Text("Release ToneGenerator")
             }

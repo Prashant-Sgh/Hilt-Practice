@@ -21,6 +21,7 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.core.net.toUri
+import com.example.hiltpractice.Navigation.HomeScreen
 import com.example.hiltpractice.ui.theme.HiltPracticeTheme
 
 class MainActivity : ComponentActivity() {
@@ -33,39 +34,7 @@ class MainActivity : ComponentActivity() {
 
             HiltPracticeTheme {
                 Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
-                    Box(modifier = Modifier.fillMaxSize().padding(innerPadding),
-                        contentAlignment = Alignment.Center) {
-                        Column (
-                            horizontalAlignment = Alignment.CenterHorizontally
-                        ){
-                            Text(
-                                text = "This is the first screen from Main Activity",
-                            )
-                            Spacer(Modifier.height(10.dp))
-
-                            Button(
-                                onClick = {
-
-                                    val intent = Intent(context, SecondActivity::class.java)
-                                    intent.putExtra("AcDc", "Highway to hell")
-                                    context.startActivity(intent)
-
-//                                    val intent = Intent(Intent.ACTION_VIEW)
-//                                    intent.data = "https://github.com/Prashant-Sgh".toUri()
-//                                    context.startActivity(intent)
-                                }
-                            ) {
-                                Text("Click me")
-                            }
-                            Spacer(Modifier.height(10.dp))
-                            Text(
-                                text = "*This button should shift you to second screen",
-                                fontSize = 14.sp,
-                                color = Color.DarkGray
-                            )
-                        }
-                    }
-
+                    HomeScreen(Modifier.padding(innerPadding))
                 }
             }
         }
